@@ -54,7 +54,7 @@ export function PuntosNormales(resultados: {
       if (resultados[jugador]["Y Mayor Grupo"] === maxGrupoY) {
         puntosSeparados[jugador]["puntosPorMayorGrupoY"] *= 2;
       }
-      if (resultados[jugador]["Sobrevendido"] === maxSobrevendidos) {
+      if (resultados[jugador]["Sobrevendido"] === maxSobrevendidos && maxSobrevendidos > 0) {
         puntosSeparados[jugador]["puntosPorSobrevendido"] -= 2;
       }
     }
