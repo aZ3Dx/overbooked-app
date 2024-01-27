@@ -11,6 +11,7 @@ import { ObtenerInfo, ObtenerPosicionesColor } from "@/utils/GetInfo";
 import { PuntosNormales } from "@/utils/Points";
 import { useState } from "react";
 import confetti from "canvas-confetti";
+import { eventos } from "@/utils/eventos";
 
 export default function HomePage() {
   const [cantidadJugadores, setCantidadJugadores] = useState(1);
@@ -18,6 +19,10 @@ export default function HomePage() {
   const [resultadosSolicitados, setResultadosSolicitados] = useState(false);
   const [resultadosObtenidos, setResultadosObtenidos] = useState(false);
   const [puntos, setPuntos] = useState<{ [key: string]: number }>({});
+  const [eventosSeleccionados, setEventosSeleccionados] = useState<string[]>(
+    []
+  );
+  const [mostrarEventos, setMostrarEventos] = useState(false);
 
   const handleCalcularPuntos = () => {
     setResultadosSolicitados(true);
@@ -138,6 +143,15 @@ export default function HomePage() {
     setResultadosSolicitados(false);
   };
 
+  //Funciones relacionadas a Eventos
+  const toggleEventosSeleccionados = (evento: string) => {
+    if (eventosSeleccionados.includes(evento)) {
+      setEventosSeleccionados(eventosSeleccionados.filter((e) => e !== evento));
+    } else {
+      setEventosSeleccionados([...eventosSeleccionados, evento]);
+    }
+  };
+
   return (
     <>
       {/* Un div que oscurece la pantalla y muestra un loader mientras se calculan los puntos */}
@@ -176,6 +190,64 @@ export default function HomePage() {
             >
               +
             </button>
+          </div>
+          <div className="mx-2">
+            <div className="my-2">
+              <span>Eventos:</span>
+              <button
+                className={`border px-2 rounded-md ml-2 text-slate-700 ${
+                  mostrarEventos ? "bg-red-200" : "bg-green-200"
+                }`}
+                onClick={() => setMostrarEventos(!mostrarEventos)}
+              >
+                {mostrarEventos ? "Ocultar" : "Mostrar"}
+              </button>
+            </div>
+            {mostrarEventos && (
+              <div className="flex flex-wrap gap-1">
+                {eventos.map((evento) => (
+                  <div
+                    key={evento}
+                    className="flex items-center gap-1 border border-slate-400 rounded-md px-1"
+                  >
+                    {/* <input
+                      type="checkbox"
+                      checked={eventosSeleccionados.includes(evento)}
+                      onChange={() => toggleEventosSeleccionados(evento)}
+                      className="mr-1"
+                    />
+                    <label>{evento}</label> */}
+                    <label className="cursor-pointer flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={eventosSeleccionados.includes(evento)}
+                        onChange={() => toggleEventosSeleccionados(evento)}
+                        className="mr-1 cursor-pointer"
+                      />
+                      {evento}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
+            {eventosSeleccionados.length > 0 && (
+              <div>
+                <span className="font-bold">Eventos seleccionados:</span>
+                <div className="flex flex-wrap gap-1">
+                  {eventosSeleccionados.map((evento) => (
+                    // Ponerle fondo degradado como morado y que se vea el texto
+                    <div
+                      key={evento}
+                      // className="flex items-center gap-1 border border-slate-400 rounded-md px-1"
+                      className="flex items-center gap-1 border border-slate-400 text-white rounded-md px-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+                    >
+                      {/* Solo mostrar los eventos */}
+                      <label className="flex items-center">{evento}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {/* Barra donde se elije el color a usar */}

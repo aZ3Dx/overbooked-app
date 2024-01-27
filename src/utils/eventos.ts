@@ -1,0 +1,36 @@
+export const eventos: string[] = [
+  "Adorable Kids",
+  "Buddy Time",
+  "Corner Seats",
+  "Couples Retreat",
+  "Emergency Exit Assistance",
+  "Family Vacation",
+  "Full Flight",
+  "Kids Gone Wild",
+  "Lonely Christmas",
+  "Low Season Blues",
+  "Missing Friends",
+  "School Holydays",
+  "Three's Company",
+  "Beautiful Sunset",
+  "Like Sardinhes",
+];
+
+//Mapeo de eventos a solo Siglas
+export const eventosSiglas: { [key: string]: string } = {
+  "Adorable Kids": "AK",
+  "Buddy Time": "BT",
+  "Corner Seats": "CS",
+  "Couples Retreat": "CR",
+  "Emergency Exit Assistance": "EEA",
+  "Family Vacation": "FV",
+  "Full Flight": "FF",
+  "Kids Gone Wild": "KGW",
+  "Lonely Christmas": "LC",
+  "Low Season Blues": "LSB",
+  "Missing Friends": "MF",
+  "School Holydays": "SH",
+  "Three's Company": "TC",
+  "Beautiful Sunset": "BS",
+  "Like Sardinhes": "LS",
+};
