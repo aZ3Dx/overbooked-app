@@ -55,6 +55,7 @@ export default function BoardSection({
   };
 
   const clasesGrid = `grid grid-cols-${columnas} grid-rows-${filas} gap-1 place-items-center`;
+  // const clasesGrid = `col-span-${columnas}`;
 
   return (
     <div className={clasesGrid} data-seccion={seccionIndex}>

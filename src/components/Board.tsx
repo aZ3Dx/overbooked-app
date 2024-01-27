@@ -29,7 +29,7 @@ export default function Board({
     <div className="border border-black rounded-md p-2">
       <p className="text-lg font-bold">Jugador {tableroIndex + 1}</p>
       <div
-        className="border-2 border-slate-500 rounded-xl p-2"
+        className="border-2 border-slate-500 rounded-xl p-2 grid"
         data-tablero={tableroIndex}
       >
         {tipoTablero === 1 ? (
