@@ -8,7 +8,7 @@ export default function BoardExtra() {
   return (
     <div className="flex justify-between mt-2">
       <div className="flex items-center gap-2">
-        <Image src="/over.ico" width={20} height={20} alt="Sobrevendido" />
+        <Image src="/over.png" width={20} height={20} alt="Sobrevendido" />
         <input
           name="sobrevendido"
           type="range"
@@ -21,7 +21,7 @@ export default function BoardExtra() {
         <p className="w-5">{sobrevendido}</p>
       </div>
       <div className="flex items-center gap-2">
-        <Image src="/vale.ico" width={20} height={20} alt="Vales" />
+        <Image src="/vale.png" width={20} height={20} alt="Vales" />
         <input
           name="vales"
           type="range"
