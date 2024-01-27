@@ -1,6 +1,7 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import BoardSection from "./BoardSection";
 import BoardExtra from "./BoardExtra";
+import Image from "next/image";
 
 type BoardProps = {
   tipoTablero: number;
@@ -25,9 +26,53 @@ export default function Board({
       : color === "Blanco"
       ? "bg-slate-50"
       : "bg-slate-400";
+
+  const [estrellas, setEstrellas] = useState(0);
+
+  const handleDisminuirEstrellas = () => {
+    estrellas > 0 && setEstrellas(estrellas - 1);
+  };
+
+  const handleAumentarEstrellas = () => {
+    setEstrellas(estrellas + 1);
+  };
+
   return (
     <div className="border border-black rounded-md p-2">
-      <p className="text-lg font-bold">Jugador {tableroIndex + 1}</p>
+      <div className="pb-2 flex justify-between items-center">
+        <p className="text-lg font-bold">Jugador {tableroIndex + 1}</p>
+        <div className="flex gap-1">
+          <div className="border border-slate-400 rounded-md flex p-1 ps-2 items-center gap-1">
+            {/* Agregar data-estrellas-0=estrellas */}
+            {/* Donde 0 es el index del tablero y estrellas es la cantidad de estrellas */}
+            <p
+              className="w-5"
+              {...{ [`data-estrellas-${tableroIndex}`]: estrellas }}
+            >
+              {estrellas}
+            </p>
+            <Image
+              src="/star.png"
+              width={16}
+              height={16}
+              alt="Estrellas"
+              className="w-4 h-4"
+            />
+          </div>
+          <button
+            className="border border-slate-400 rounded-md p-1 w-6"
+            onClick={handleDisminuirEstrellas}
+          >
+            -
+          </button>
+          <button
+            className="border border-slate-400 rounded-md p-1 w-6"
+            onClick={handleAumentarEstrellas}
+          >
+            +
+          </button>
+        </div>
+      </div>
       <div
         className="border-2 border-slate-500 rounded-xl p-2 grid"
         data-tablero={tableroIndex}

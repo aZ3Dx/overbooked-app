@@ -31,6 +31,7 @@ export default function HomePage() {
     //Hacemos un array con los valores de los inputs por cada tablero
     const sobrevendido = [];
     const vales = [];
+    const estrellas = [];
     for (let i = 0; i < cantidadJugadores; i++) {
       const tableroDiv = document.querySelector(`[data-tablero="${i}"]`);
       const sobrevendidoInput = tableroDiv?.querySelector(
@@ -41,6 +42,10 @@ export default function HomePage() {
       ) as HTMLInputElement;
       sobrevendido.push(parseInt(sobrevendidoInput.value));
       vales.push(parseInt(valesInput.value));
+      // Recolectamos las estrellas
+      // data-estrellas-index=estrellas
+      const estrellasInputs = document.querySelector(`[data-estrellas-${i}]`);
+      estrellas.push(parseInt(estrellasInputs?.textContent || "0"));
     }
 
     const resultados: { [key: string]: { [key: string]: number } } = {};
@@ -102,6 +107,7 @@ export default function HomePage() {
       resultados[`jugador${tablero}`]["B Mayor Grupo"] = bMayorGrupo;
       resultados[`jugador${tablero}`]["G Mayor Grupo"] = gMayorGrupo;
       resultados[`jugador${tablero}`]["Y Mayor Grupo"] = yMayorGrupo;
+      resultados[`jugador${tablero}`]["Estrellas"] = estrellas[i];
       resultados[`jugador${tablero}`]["Sobrevendido"] = sobrevendido[i];
       resultados[`jugador${tablero}`]["Vales"] = vales[i];
       i++;
@@ -173,12 +179,10 @@ export default function HomePage() {
           </div>
         </div>
         {/* Barra donde se elije el color a usar */}
-        <div className="mx-2 mb-2">
-          <div className="flex gap-1 flex-wrap">
-            <span>Color:</span>
-
+        <div className="mb-2 sticky top-0 bg-slate-600 p-2 border border-slate-500">
+          <div className="flex gap-1 flex-wrap justify-center text-white">
             <button
-              className={`border border-black px-2 rounded-md ${
+              className={`border-2 border-red-500 px-2 rounded-md ${
                 color === "Rojo" ? "bg-red-500" : ""
               }`}
               onClick={() => cambiarColor("Rojo")}
@@ -186,7 +190,7 @@ export default function HomePage() {
               Rojo
             </button>
             <button
-              className={`border border-black px-2 rounded-md ${
+              className={`border-2 border-blue-500 px-2 rounded-md ${
                 color === "Azul" ? "bg-blue-500" : ""
               }`}
               onClick={() => cambiarColor("Azul")}
@@ -194,7 +198,7 @@ export default function HomePage() {
               Azul
             </button>
             <button
-              className={`border border-black px-2 rounded-md ${
+              className={`border-2 border-green-500 px-2 rounded-md ${
                 color === "Verde" ? "bg-green-500" : ""
               }`}
               onClick={() => cambiarColor("Verde")}
@@ -202,7 +206,7 @@ export default function HomePage() {
               Verde
             </button>
             <button
-              className={`border border-black px-2 rounded-md ${
+              className={`border-2 border-yellow-500 px-2 rounded-md ${
                 color === "Amarillo" ? "bg-yellow-500" : ""
               }`}
               onClick={() => cambiarColor("Amarillo")}
@@ -210,20 +214,20 @@ export default function HomePage() {
               Amarillo
             </button>
             <button
-              className={`border border-black px-2 rounded-md ${
-                color === "Blanco" ? "bg-slate-50" : ""
+              className={`border-2 border-slate-50 px-2 rounded-md ${
+                color === "Blanco" ? "bg-slate-50 text-black" : ""
               }`}
               onClick={() => cambiarColor("Blanco")}
             >
               Blanco
             </button>
             <button
-              className={`border border-black px-2 rounded-md ${
+              className={`border-2 border-slate-400 px-2 rounded-md ${
                 color === "Gris" ? "bg-slate-400" : ""
               }`}
               onClick={() => cambiarColor("Gris")}
             >
-              Vacío
+              V
             </button>
           </div>
         </div>

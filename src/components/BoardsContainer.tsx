@@ -11,7 +11,7 @@ export default function BoardsContainer({
 }: BoardsContainerProps) {
   const tipoTablero = cantidadJugadores <= 3 ? 1 : 2;
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mx-2">
       {[...Array(cantidadJugadores)].map((_, i) => (
         <Board
           key={i}

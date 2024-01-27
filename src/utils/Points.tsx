@@ -19,10 +19,15 @@ export function PuntosNormales(resultados: {
     puntosSeparados[jugador]["puntosPorVales"] = Math.floor(
       resultados[jugador]["Vales"] / 2
     );
+    puntosSeparados[jugador]["puntosPorEstrella"] =
+      resultados[jugador]["Estrellas"];
     puntosSeparados[jugador]["puntosPorV"] = resultados[jugador]["V"] * -1;
     puntosSeparados[jugador]["puntosPorSobrevendido"] =
       resultados[jugador]["Sobrevendido"] * -2;
   }
+
+  // Consola para ver los puntos separados
+  console.log(puntosSeparados);
 
   // Si hay mas de un jugador se compara quien tiene el grupo mas grande de cada color y se le multiplica por 2, si hay 2 o mas jugadores con el grupo mas grande se le multiplica por 2 a todos
   // Tambien quien tenga mas Sobrevendidos se le resta 2 puntos extra

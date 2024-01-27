@@ -8,7 +8,7 @@ export default function ResultsModal({
   handleCerrarModal,
 }: ResultsModalProps) {
   return (
-    <div className="flex flex-col gap-4 fixed items-center justify-center bg-gray-200 w-full h-full top-0 left-0">
+    <div className="flex flex-col gap-4 fixed items-center justify-center bg-gray-200 w-full h-full top-0 left-0 z-10">
       <div className="grid grid-cols-4">
         <span>=</span>
         <span>=</span>

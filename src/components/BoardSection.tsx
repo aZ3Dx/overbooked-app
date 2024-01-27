@@ -62,7 +62,7 @@ export default function BoardSection({
       {[...Array(cantidadLozetas)].map((_, i) => (
         <div
           key={i}
-          className={`h-6 w-6 border border-slate-300 ${arrayColores[i]}`}
+          className={`h-6 w-6 border border-black ${arrayColores[i]}`}
           onClick={() => cambiarColor(i)}
           data-color={arrayDataColor[i]}
         ></div>
