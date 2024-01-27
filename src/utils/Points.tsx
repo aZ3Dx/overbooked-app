@@ -21,7 +21,7 @@ export function PuntosNormales(resultados: {
     );
     puntosSeparados[jugador]["puntosPorV"] = resultados[jugador]["V"] * -1;
     puntosSeparados[jugador]["puntosPorSobrevendido"] =
-      resultados[jugador]["Sobrevendido"] * -1;
+      resultados[jugador]["Sobrevendido"] * -2;
   }
 
   // Si hay mas de un jugador se compara quien tiene el grupo mas grande de cada color y se le multiplica por 2, si hay 2 o mas jugadores con el grupo mas grande se le multiplica por 2 a todos
@@ -54,7 +54,10 @@ export function PuntosNormales(resultados: {
       if (resultados[jugador]["Y Mayor Grupo"] === maxGrupoY) {
         puntosSeparados[jugador]["puntosPorMayorGrupoY"] *= 2;
       }
-      if (resultados[jugador]["Sobrevendido"] === maxSobrevendidos && maxSobrevendidos > 0) {
+      if (
+        resultados[jugador]["Sobrevendido"] === maxSobrevendidos &&
+        maxSobrevendidos > 0
+      ) {
         puntosSeparados[jugador]["puntosPorSobrevendido"] -= 2;
       }
     }
