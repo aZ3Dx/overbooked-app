@@ -72,7 +72,7 @@ export function PuntosNormales(resultados: {
       gruposG.push(resultados[jugador]["G Mayor Grupo"]);
       gruposY.push(resultados[jugador]["Y Mayor Grupo"]);
       sobrevendidos.push(resultados[jugador]["Sobrevendido"]);
-      eventoLSB.push(resultados[jugador]["LSB"]);
+      eventoLSB.push(resultados[jugador]["Low Season Blues"]);
     }
 
     const maxGrupoB = Math.max(...gruposB);
@@ -99,6 +99,8 @@ export function PuntosNormales(resultados: {
       }
       if (resultados[jugador]["Low Season Blues"] === maxLSB && maxLSB > 0) {
         puntosSeparados[jugador]["Low Season Blues"] = 5;
+      } else {
+        puntosSeparados[jugador]["Low Season Blues"] = 0;
       }
     }
   }
