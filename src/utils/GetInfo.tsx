@@ -48,33 +48,3 @@ export const ObtenerInfo = (cantidadJugadores: number) => {
   //Retornamos un objeto con la info de los tableros y la posicion de los colores luego lo desestructuramos
   return { data, posicionColoresPorSeccion };
 };
-
-export const ObtenerPosicionesColor = (juego: {
-  [key: string]: { [key: string]: string[][] };
-}) => {
-  const posicionColoresPorSeccion: {
-    [key: string]: { [key: string]: { [key: string]: number[][] } };
-  } = {};
-  for (const tablero in juego) {
-    posicionColoresPorSeccion[tablero] = {};
-    for (const seccion in juego[tablero]) {
-      posicionColoresPorSeccion[tablero][seccion] = {};
-
-      // Inicializa el array para cada color antes del bucle interno
-      posicionColoresPorSeccion[tablero][seccion]["R"] = [];
-      posicionColoresPorSeccion[tablero][seccion]["B"] = [];
-      posicionColoresPorSeccion[tablero][seccion]["G"] = [];
-      posicionColoresPorSeccion[tablero][seccion]["Y"] = [];
-      posicionColoresPorSeccion[tablero][seccion]["W"] = [];
-      posicionColoresPorSeccion[tablero][seccion]["V"] = [];
-
-      for (let i = 0; i < juego[tablero][seccion].length; i++) {
-        for (let j = 0; j < juego[tablero][seccion][i].length; j++) {
-          const color = juego[tablero][seccion][i][j];
-          posicionColoresPorSeccion[tablero][seccion][color].push([i, j]);
-        }
-      }
-    }
-  }
-  return posicionColoresPorSeccion;
-};

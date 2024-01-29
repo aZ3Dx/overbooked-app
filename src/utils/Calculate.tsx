@@ -1,3 +1,5 @@
+// Cálculos base para el juego
+
 export function contarWRodeados(matrix: string[][], positions: number[][]) {
   let count = 0;
 
@@ -131,29 +133,23 @@ function contarElementosVecinos(
   return count;
 }
 
-// function contarElementosVecinos(
-//   matrix: string[][],
-//   row: number,
-//   col: number,
-//   color: string
-// ): number {
-//   if (
-//     row < 0 ||
-//     col < 0 ||
-//     row >= matrix.length ||
-//     col >= matrix[0].length ||
-//     matrix[row][col] !== color
-//   ) {
-//     return 0;
-//   }
+// Cálculos de eventos
+import { eventosFunciones } from "./eventos";
 
-//   matrix[row][col] = "V"; // Marcamos el elemento para evitar contar múltiples veces
-
-//   return (
-//     1 +
-//     contarElementosVecinos(matrix, row - 1, col, color) +
-//     contarElementosVecinos(matrix, row + 1, col, color) +
-//     contarElementosVecinos(matrix, row, col - 1, color) +
-//     contarElementosVecinos(matrix, row, col + 1, color)
-//   );
-// }
+export function calculoEventos(
+  juego: { [key: string]: { [key: string]: string[][] } },
+  posicionColoresPorSeccion: {
+    [key: string]: { [key: string]: { [key: string]: number[][] } };
+  },
+  eventosSeleccionados: string[],
+  resultados: { [key: string]: { [key: string]: number } }
+) {
+  eventosSeleccionados.forEach((evento) => {
+    eventosFunciones[evento]({
+      juego,
+      posicionColoresPorSeccion,
+      resultados,
+    });
+  });
+  return 0;
+}

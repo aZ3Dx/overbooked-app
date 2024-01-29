@@ -2,16 +2,17 @@
 import BoardsContainer from "@/components/BoardsContainer";
 import ResultsModal from "@/components/ResultsModal";
 import {
+  calculoEventos,
   contarCuantosVHay,
   contarParejasDeR,
   contarWRodeados,
   mayorGrupo,
 } from "@/utils/Calculate";
-import { ObtenerInfo, ObtenerPosicionesColor } from "@/utils/GetInfo";
+import { ObtenerInfo } from "@/utils/GetInfo";
 import { PuntosNormales } from "@/utils/Points";
 import { useState } from "react";
 import confetti from "canvas-confetti";
-import { eventos } from "@/utils/eventos";
+import { eventos, eventosDisponibles } from "@/utils/eventos";
 
 export default function HomePage() {
   const [cantidadJugadores, setCantidadJugadores] = useState(1);
@@ -19,6 +20,9 @@ export default function HomePage() {
   const [resultadosSolicitados, setResultadosSolicitados] = useState(false);
   const [resultadosObtenidos, setResultadosObtenidos] = useState(false);
   const [puntos, setPuntos] = useState<{ [key: string]: number }>({});
+  const [puntosSeparados, setPuntosSeparados] = useState<{
+    [key: string]: { [key: string]: number };
+  }>({});
   const [eventosSeleccionados, setEventosSeleccionados] = useState<string[]>(
     []
   );
@@ -29,6 +33,8 @@ export default function HomePage() {
 
     const { data: juego, posicionColoresPorSeccion } =
       ObtenerInfo(cantidadJugadores);
+    const juegoBackup = JSON.parse(JSON.stringify(juego));
+    // console.log(juego);
     // console.log(juego);
     // console.log(posicionColoresPorSeccion);
 
@@ -118,11 +124,29 @@ export default function HomePage() {
       i++;
       // Validaciones (posteriormente se puede hacer un componente para esto)
     }
+    // Parte de los eventos
+    // Si hay eventos seleccionados
+    if (eventosSeleccionados.length > 0) {
+      calculoEventos(
+        juegoBackup,
+        posicionColoresPorSeccion,
+        eventosSeleccionados,
+        resultados
+      );
+    }
     // Contar los puntos de cada jugador
-    const puntosNormales = PuntosNormales(resultados);
+    const { puntos: puntosNormales, puntosSeparados } =
+      PuntosNormales(resultados);
+
     setPuntos(puntosNormales);
+    setPuntosSeparados(puntosSeparados);
     setResultadosObtenidos(true);
-    confetti();
+    //Lanzar bastantes confettis
+    confetti({
+      particleCount: 200,
+      spread: 180,
+      origin: { y: 0.6 },
+    });
   };
 
   const aumentarCantidadJugadores = () => {
@@ -168,7 +192,11 @@ export default function HomePage() {
       )}
       {/* Modal que muestra los resultados */}
       {resultadosSolicitados && resultadosObtenidos && (
-        <ResultsModal puntos={puntos} handleCerrarModal={handleCerrarModal} />
+        <ResultsModal
+          puntos={puntos}
+          handleCerrarModal={handleCerrarModal}
+          puntosSeparados={puntosSeparados}
+        />
       )}
       <main className="mx-auto w-full md:w-1/2">
         <div className="mb-2">
@@ -204,25 +232,21 @@ export default function HomePage() {
               </button>
             </div>
             {mostrarEventos && (
-              <div className="flex flex-wrap gap-1">
-                {eventos.map((evento) => (
+              <div className="flex flex-wrap gap-1 mb-2">
+                {eventos.map((evento, i) => (
                   <div
                     key={evento}
-                    className="flex items-center gap-1 border border-slate-400 rounded-md px-1"
+                    className={`flex items-center gap-1 border border-slate-400 rounded-md px-1 ${
+                      eventosDisponibles[i] ? "" : "text-slate-400"
+                    }`}
                   >
-                    {/* <input
-                      type="checkbox"
-                      checked={eventosSeleccionados.includes(evento)}
-                      onChange={() => toggleEventosSeleccionados(evento)}
-                      className="mr-1"
-                    />
-                    <label>{evento}</label> */}
                     <label className="cursor-pointer flex items-center">
                       <input
                         type="checkbox"
                         checked={eventosSeleccionados.includes(evento)}
                         onChange={() => toggleEventosSeleccionados(evento)}
                         className="mr-1 cursor-pointer"
+                        disabled={eventosDisponibles[i] ? false : true}
                       />
                       {evento}
                     </label>
@@ -232,17 +256,28 @@ export default function HomePage() {
             )}
             {eventosSeleccionados.length > 0 && (
               <div>
-                <span className="font-bold">Eventos seleccionados:</span>
+                {/* <span className="font-bold">Eventos seleccionados:</span> */}
                 <div className="flex flex-wrap gap-1">
                   {eventosSeleccionados.map((evento) => (
                     // Ponerle fondo degradado como morado y que se vea el texto
                     <div
                       key={evento}
                       // className="flex items-center gap-1 border border-slate-400 rounded-md px-1"
-                      className="flex items-center gap-1 border border-slate-400 text-white rounded-md px-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+                      className="flex items-center gap-1 border border-slate-400 text-white rounded-md ps-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
                     >
                       {/* Solo mostrar los eventos */}
                       <label className="flex items-center">{evento}</label>
+                      <button
+                        // Background transparente, solo un poco
+                        className="text-red-500 px-1 bg-white bg-opacity-50 rounded-r-md text-sm h-full"
+                        onClick={() =>
+                          setEventosSeleccionados(
+                            eventosSeleccionados.filter((e) => e !== evento)
+                          )
+                        }
+                      >
+                        &#10006;
+                      </button>
                     </div>
                   ))}
                 </div>

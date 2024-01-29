@@ -24,10 +24,27 @@ export function PuntosNormales(resultados: {
     puntosSeparados[jugador]["puntosPorV"] = resultados[jugador]["V"] * -1;
     puntosSeparados[jugador]["puntosPorSobrevendido"] =
       resultados[jugador]["Sobrevendido"] * -2;
+    // Parte Eventos
+    // Para las demás cosas (eventos) del array resultados simplemente se copia el valor al array puntosSeparados
+    for (const evento in resultados[jugador]) {
+      if (
+        evento !== "R Parejas" &&
+        evento !== "W Rodeados" &&
+        evento !== "B Mayor Grupo" &&
+        evento !== "G Mayor Grupo" &&
+        evento !== "Y Mayor Grupo" &&
+        evento !== "Vales" &&
+        evento !== "Estrellas" &&
+        evento !== "V" &&
+        evento !== "Sobrevendido"
+      ) {
+        puntosSeparados[jugador][evento] = resultados[jugador][evento];
+      }
+    }
   }
 
   // Consola para ver los puntos separados
-  console.log(puntosSeparados);
+  // console.log(puntosSeparados);
 
   // Si hay mas de un jugador se compara quien tiene el grupo mas grande de cada color y se le multiplica por 2, si hay 2 o mas jugadores con el grupo mas grande se le multiplica por 2 a todos
   // Tambien quien tenga mas Sobrevendidos se le resta 2 puntos extra
@@ -36,18 +53,21 @@ export function PuntosNormales(resultados: {
     const gruposG: number[] = [];
     const gruposY: number[] = [];
     const sobrevendidos: number[] = [];
+    const eventoLSB: number[] = [];
 
     for (const jugador in resultados) {
       gruposB.push(resultados[jugador]["B Mayor Grupo"]);
       gruposG.push(resultados[jugador]["G Mayor Grupo"]);
       gruposY.push(resultados[jugador]["Y Mayor Grupo"]);
       sobrevendidos.push(resultados[jugador]["Sobrevendido"]);
+      eventoLSB.push(resultados[jugador]["LSB"]);
     }
 
     const maxGrupoB = Math.max(...gruposB);
     const maxGrupoG = Math.max(...gruposG);
     const maxGrupoY = Math.max(...gruposY);
     const maxSobrevendidos = Math.max(...sobrevendidos);
+    const maxLSB = Math.max(...eventoLSB);
 
     for (const jugador in resultados) {
       if (resultados[jugador]["B Mayor Grupo"] === maxGrupoB) {
@@ -65,9 +85,20 @@ export function PuntosNormales(resultados: {
       ) {
         puntosSeparados[jugador]["puntosPorSobrevendido"] -= 2;
       }
+      if (resultados[jugador]["Low Season Blues"] === maxLSB && maxLSB > 0) {
+        puntosSeparados[jugador]["Low Season Blues"] = 5;
+      }
     }
   }
 
+  const puntos = ContandoPuntos(puntosSeparados);
+
+  return puntos;
+}
+
+function ContandoPuntos(puntosSeparados: {
+  [key: string]: { [key: string]: number };
+}) {
   const puntos: { [key: string]: number } = {};
 
   for (const jugador in puntosSeparados) {
@@ -76,5 +107,5 @@ export function PuntosNormales(resultados: {
     );
   }
 
-  return puntos;
+  return { puntos, puntosSeparados };
 }
