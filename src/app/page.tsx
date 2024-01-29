@@ -198,7 +198,11 @@ export default function HomePage() {
           puntosSeparados={puntosSeparados}
         />
       )}
-      <main className="mx-auto w-full md:w-1/2">
+      <main
+        className={`mx-auto w-full md:w-1/2 ${
+          resultadosObtenidos ? "blur" : ""
+        }`}
+      >
         <div className="mb-2">
           <h1 className="text-center align-middle font-bold text-lg bg-orange-400 py-3 my-2">
             Overbooked - Points Counter

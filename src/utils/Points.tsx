@@ -1,3 +1,15 @@
+export const mapeoCategorias: { [key: string]: string } = {
+  puntosPorParejasDeR: "Parejas",
+  puntosPorWRodeados: "Niños Rodeados",
+  puntosPorMayorGrupoB: "Grupo de Azules",
+  puntosPorMayorGrupoG: "Grupo de Verdes",
+  puntosPorMayorGrupoY: "Grupo de Amarillos",
+  puntosPorVales: "Vales",
+  puntosPorEstrella: "Estrellas",
+  puntosPorV: "Asientos Vacíos",
+  puntosPorSobrevendido: "Sobrevendidos",
+};
+
 export function PuntosNormales(resultados: {
   [key: string]: { [key: string]: number };
 }) {
@@ -6,7 +18,7 @@ export function PuntosNormales(resultados: {
   for (const jugador in resultados) {
     // Inicializa el objeto para cada jugador antes del bucle interno
     puntosSeparados[jugador] = {};
-    puntosSeparados[jugador]["puntosPorParerjasDeR"] =
+    puntosSeparados[jugador]["puntosPorParejasDeR"] =
       resultados[jugador]["R Parejas"] * 5;
     puntosSeparados[jugador]["puntosPorWRodeados"] =
       resultados[jugador]["W Rodeados"] * 3;
